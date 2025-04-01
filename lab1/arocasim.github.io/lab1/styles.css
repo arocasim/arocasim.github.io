@@ -1,0 +1,399 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Verdana;
+    line-height: 1.6;
+    background-color: bisque;
+    color: white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Georgia; 
+    color: bisque;
+}
+
+#about-us {
+    max-width: 80%; 
+    margin: 0 auto; 
+    padding: 40px; 
+    background-color: rgb(54, 48, 48); 
+    color: white; 
+    text-align: justify; 
+    line-height: 1.8; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#about-us h2 {
+    text-align: center;
+    font-size: 2.5rem;  
+    margin-bottom: 30px;
+    color: bisque;
+    font-weight: 700; 
+}
+
+#about-us p {
+    font-size: 1.3rem; 
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+#about-us:hover {
+    background-color: #5f4e40;
+    transform: scale(1.02);  
+    transition: all 0.3s ease;
+}
+
+header {
+    background-color: rgb(54, 48, 48);
+    border: 1px solid;
+    border-bottom-left-radius: 30%;
+    border-bottom-right-radius: 30%;
+    position: sticky;
+    color: bisque;
+    padding: 10px 20px;
+    text-align: center;
+    z-index: 1000;
+}
+
+header h1 {
+    font-size: 2.5rem;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: bisque;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+nav ul li a:hover {
+    background-color: #5f4e40;
+    color: white;
+    transform: scale(1.05);
+}
+
+nav ul li a.active {
+    background-color: #4f4940;
+    color: white;
+}
+
+@media screen and (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    nav ul li a {
+        font-size: 1.5rem;
+        padding: 15px 25px;
+    }
+}
+
+section {
+    padding: 20px;
+    margin: 20px;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: rgb(54, 48, 48);
+}
+
+#recipe-details {
+    margin-top: 20px;
+    background-color: rgb(54, 48, 48);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.recipe-image {
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+}
+
+.recipe-image img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.recipe-description {
+    flex: 2;
+    min-width: 300px;
+}
+
+.recipe-description h2 {
+    font-size: 1.8rem;
+    color: bisque;
+}
+
+.recipe-description p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+.ingredients {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.ingredient h3 {
+    font-size: 1.5rem;
+    color: bisque;
+}
+
+.ingredient p {
+    font-size: 1.2rem;
+}
+
+#comments {
+    margin-top: 20px;
+}
+
+.comments {
+    margin-top: 20px;
+}
+
+.comment-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.comment-box textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    resize: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment-submit {
+    padding: 10px 20px;
+    background-color: #4f4940;
+    color: white;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.comment-submit:hover {
+    background-color: #5f4e40;
+}
+
+.comment {
+    background-color: #9c9386;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment p {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.comment strong {
+    font-weight: bold;
+    color: bisque;
+}
+
+.comment:hover {
+    background-color: #d0c6a1;
+    transform: scale(1.02);
+    transition: all 0.3s ease;
+}
+
+.comment p {
+    margin: 10px 0;
+}
+
+#my-recipes .recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.recipe-card {
+    background-color: rgb(54, 48, 48);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.recipe-card:hover {
+    transform: scale(1.05);
+}
+
+.recipe-card img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.recipe-card h3 {
+    margin-top: 10px;
+    font-size: 1.5rem;
+    color: bisque;
+}
+
+.recipe-card p {
+    margin: 10px 0;
+}
+
+.recipe-card a {
+    color: bisque;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.recipe-card a:hover {
+    color: #007BFF;
+}
+#categories ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+#categories ul li {
+    display: inline;
+}
+
+#categories ul li a {
+    color: rgb(54, 48, 48);
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#categories ul li a:hover {
+    background-color: #5f4e40;
+    color: white;
+    transform: scale(1.05);
+}
+
+#categories ul li a.active {
+    background-color: #4f4940;
+    color: white;
+}
+
+@media screen and (max-width: 768px) {
+    #categories ul {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    #categories ul li a {
+        font-size: 1.5rem;
+        padding: 15px 25px;
+    }
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: rgb(54, 48, 48);
+    color: bisque;
+    bottom: 0;
+    width: 100%;
+}
+
+.add-recipe-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#add-recipe-btn {
+    background-color: bisque;
+    color: rgb(54, 48, 48);
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#add-recipe-btn:hover {
+    background-color: #e0c4a8;
+    transform: scale(1.05);
+}
+
+#about-us {
+    background-color: rgb(54, 48, 48);
+    color: bisque;
+    padding: 40px;
+    text-align: center;
+    border-radius: 10px;
+    margin: 40px auto;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#about-us h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: bisque;
+}
+
+#about-us p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+#about-us:hover {
+    background-color: #5f4e40;
+    transition: all 0.3s ease;
+}
+.recipe-image img, .recipe-card img {
+    width: 100%; /* Забезпечує, щоб зображення не виходило за межі контейнера */
+    height: 50%; /* Приводить висоту до 100% висоти контейнера */
+    object-fit: cover; /* Обрізає зображення, щоб воно заповнило квадрат */
+    border-radius: 8px; /* Якщо потрібно, зберігаємо округлі кути */
+}
