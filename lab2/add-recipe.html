@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Додати рецепт</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="add-recipe-page">
+        <h2>Додати новий рецепт</h2>
+        <form id="recipe-form" class="add-recipe-form">
+            <label for="recipe-title">Назва рецепту:</label>
+            <input type="text" id="recipe-title" placeholder="Введіть назву" required>
+
+            <label for="recipe-ingredients">Інгредієнти:</label>
+            <textarea id="recipe-ingredients" placeholder="Введіть інгредієнти через кому" required></textarea>
+
+            <label for="recipe-time">Час приготування (хв):</label>
+            <input type="number" id="recipe-time" placeholder="Вкажіть час" required>
+
+            <label for="recipe-image">Посилання на фото:</label>
+            <input type="url" id="recipe-image" placeholder="URL зображення">
+
+            <label for="recipe-category">Категорія:</label>
+            <select id="recipe-category" required>
+                <option value="">Виберіть категорію</option>
+                <option value="закуски">Закуски</option>
+                <option value="основні страви">Основні страви</option>
+                <option value="десерти">Десерти</option>
+                <option value="напої">Напої</option>
+            </select>
+
+            <button type="submit">Додати рецепт</button>
+        </form>
+    </div>
+
+    <script src="add-recipe.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Платформа для рецептів</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Смачно разом: платформа для обміну рецептами</h1>
+        <nav>
+            <ul>
+                <li><a href="#my-recipes">Мої рецепти</a></li>
+                <li><a href="#categories">Категорії</a></li>
+                <li><a href="#about-us">Про нас</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="my-recipes">
+        <h2>Мої рецепти</h2>
+        <div id="recipes-container">
+            <!-- Рецепти будуть динамічно додаватися сюди -->
+        </div>
+        <div class="add-recipe-container">
+            <a href="add-recipe.html"><button id="add-recipe-btn">+ Додати рецепт</button></a>
+        </div>
+    </section>
+
+    <section id="categories">
+        <h2>Категорії</h2>
+        <ul>
+            <li><a href="category.html?category=breakfast">Сніданки</a></li>
+            <li><a href="category.html?category=lunch">Обіди</a></li>
+            <li><a href="category.html?category=desserts">Десерти</a></li>
+            <li><a href="category.html?category=snacks">Закуски</a></li>
+        </ul>
+    </section>
+
+    <section id="about-us">
+        <h2>Про нас</h2>
+        <p>Ласкаво просимо на нашу платформу для обміну рецептами!</p>
+    </section>
+
+    <footer class="footer">
+        <p>© 2025 Смачно разом: платформа для обміну рецептами</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
