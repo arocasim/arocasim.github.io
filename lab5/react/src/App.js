@@ -10,6 +10,7 @@ import Signup from "./components/Signup";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase-config";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
 
 const auth = getAuth();
 
@@ -28,7 +29,7 @@ function Home() {
         setCurrentUser(user);
         await fetchUserName(user.uid);
   
-        unsubscribe = subscribeToUserRecipes(user);
+        unsubscribe = subscribeToUserRecipes(user); // ⬅️ LIVE
       } else {
         setCurrentUser(null);
         setRecipes([]);
@@ -55,27 +56,29 @@ function Home() {
     }
   };
 
-  const fetchSortedRecipes = async (user) => {
-    if (!user) return;
-  
-    try {
-      const token = await user.getIdToken(); // 🔐 тепер точно не null
-  
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/recipes`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-  
-      if (!response.ok) throw new Error("Forbidden");
-  
-      const fetchedRecipes = await response.json();
-      setRecipes(fetchedRecipes);
-    } catch (error) {
-      console.error("Помилка завантаження рецептів:", error);
-    }
-  };
-  
+
+const subscribeToUserRecipes = (user) => {
+  if (!user) return;
+
+  const recipesQuery = query(
+    collection(db, "Recipes"),
+    where("userId", "==", user.uid)
+  );
+
+  const unsubscribe = onSnapshot(recipesQuery, (snapshot) => {
+    const updatedRecipes = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    updatedRecipes.sort((a, b) => parseInt(a.time) - parseInt(b.time));
+
+    setRecipes(updatedRecipes);
+  });
+
+  return unsubscribe;
+};
+
   
   const handleSignOut = () => {
     signOut(auth)
@@ -128,7 +131,6 @@ function Home() {
 
           if (!response.ok) throw new Error();
 
-          await fetchSortedRecipes(currentUser.uid); // ⬅️ після додавання перезапитуємо список СОРТОВАНИЙ
           Swal.fire("Рецепт додано!", "", "success");
         } catch (error) {
           Swal.fire("Помилка", "Не вдалося додати рецепт", "error");
@@ -151,7 +153,6 @@ function Home() {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/api/recipes/${id}`, 
           { method: 'DELETE' });
         if (!response.ok) throw new Error();
-        await fetchSortedRecipes(currentUser.uid); // ⬅️ після видалення перезапитуємо список СОРТОВАНИЙ
         Swal.fire('Рецепт видалено', '', 'success');
       } catch (error) {
         Swal.fire('Помилка', 'Не вдалося видалити рецепт', 'error');
@@ -200,7 +201,6 @@ function Home() {
 
           if (!response.ok) throw new Error();
 
-          await fetchSortedRecipes(currentUser.uid); // ⬅️ після редагування перезапитуємо список СОРТОВАНИЙ
           Swal.fire("Оновлено!", "", "success");
         } catch (error) {
           Swal.fire("Помилка", "Не вдалося оновити рецепт", "error");
