@@ -3,10 +3,18 @@ const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const path = require('path');
-const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
-const { getFirestore } = require('firebase-admin/firestore');
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-initializeApp({ credential: cert(serviceAccount) });
+const admin = require('firebase-admin');
+
+// ✅ Ініціалізація Firebase через env-змінну без дублювання
+if (!admin.apps.length) {
+  const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+}
+
+const db = admin.firestore();
+const recipesCollection = db.collection('Recipes');
 
 const app = express();
 const PORT = 5000;
@@ -14,13 +22,6 @@ const SECRET_KEY = 'f2a7cb8bfe0d89a31ad8b46c8edb726e30aa9a99879a7fda1320de78495a
 
 app.use(cors());
 app.use(express.json());
-
-initializeApp({
-  credential: cert(serviceAccount)
-});
-
-const db = getFirestore();
-const recipesCollection = db.collection('Recipes');
 
 let users = [];
 function authenticateToken(req, res, next) {
@@ -119,7 +120,6 @@ app.get('/api/recipes/:id', async (req, res) => {
     res.status(500).json({ message: 'Помилка отримання рецепта' });
   }
 });
-
 
 app.post('/api/recipes', async (req, res) => {
   try {
