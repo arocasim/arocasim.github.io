@@ -69,28 +69,24 @@ app.get('/profile', authenticateToken, (req, res) => {
 
 
 
-app.get('/api/recipes/sorted', async (req, res) => {
+app.get('/api/recipes/sorted', authenticateToken, async (req, res) => {
   try {
-    const { userId } = req.query;
-    if (!userId) {
-      return res.status(400).json({ message: 'userId обов\'язковий' });
-    }
+    const userId = req.user.id; // з токена
+    const snapshot = await recipesCollection
+      .where('userId', '==', userId)
+      .get();
 
-    const snapshot = await recipesCollection.where('userId', '==', userId).get();
     let recipes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-    recipes.sort((a, b) => {
-      const timeA = parseInt(a.time);
-      const timeB = parseInt(b.time);
-      return timeA - timeB;
-    });
+    recipes.sort((a, b) => parseInt(a.time) - parseInt(b.time)); // ⬅️ сортування за часом
 
     res.json(recipes);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Помилка сортування рецептів' });
+    console.error("Помилка при отриманні відсортованих рецептів:", error);
+    res.status(500).json({ message: 'Помилка при отриманні відсортованих рецептів' });
   }
 });
+
 
 app.get('/api/recipes', authenticateToken, async (req, res) => {
   try {

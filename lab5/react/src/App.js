@@ -21,19 +21,27 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    let unsubscribe = null;
+  
+    const authUnsub = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setCurrentUser(user);
         await fetchUserName(user.uid);
-        await fetchSortedRecipes(user); // 🔁 передаємо весь об'єкт user
+  
+        unsubscribe = subscribeToUserRecipes(user);
       } else {
         setCurrentUser(null);
         setRecipes([]);
+        if (unsubscribe) unsubscribe();
       }
     });
   
-    return () => unsubscribe();
+    return () => {
+      authUnsub();
+      if (unsubscribe) unsubscribe();
+    };
   }, []);
+  
   
 
   const fetchUserName = async (uid) => {
