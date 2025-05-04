@@ -38,6 +38,21 @@ async function authenticateToken(req, res, next) {
   }
 }
 
+app.get('/api/recipes/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const doc = await recipesCollection.doc(id).get();
+
+    if (!doc.exists) {
+      return res.status(404).json({ message: 'Рецепт не знайдено' });
+    }
+
+    res.json({ id: doc.id, ...doc.data() });
+  } catch (error) {
+    console.error('Помилка при отриманні рецепта:', error);
+    res.status(500).json({ message: 'Помилка при отриманні рецепта' });
+  }
+});
 
 app.post('/register', async (req, res) => {
   const { email, password, name } = req.body;
