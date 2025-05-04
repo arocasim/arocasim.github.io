@@ -25,15 +25,16 @@ function Home() {
       if (user) {
         setCurrentUser(user);
         await fetchUserName(user.uid);
-        await fetchSortedRecipes(user.uid); // ТЕПЕР ВИКЛИКАЄМО ОДРАЗУ ВІДСОРТОВАНІ
+        await fetchSortedRecipes(user); // 🔁 передаємо весь об'єкт user
       } else {
         setCurrentUser(null);
         setRecipes([]);
       }
     });
-
+  
     return () => unsubscribe();
   }, []);
+  
 
   const fetchUserName = async (uid) => {
     try {
@@ -46,11 +47,11 @@ function Home() {
     }
   };
 
-  const fetchSortedRecipes = async (uid) => {
-    if (!uid) return;
+  const fetchSortedRecipes = async (user) => {
+    if (!user) return;
   
     try {
-      const token = await currentUser.getIdToken(); 
+      const token = await user.getIdToken(); // 🔐 тепер точно не null
   
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/recipes`, {
         headers: {
@@ -58,12 +59,15 @@ function Home() {
         },
       });
   
+      if (!response.ok) throw new Error("Forbidden");
+  
       const fetchedRecipes = await response.json();
       setRecipes(fetchedRecipes);
     } catch (error) {
       console.error("Помилка завантаження рецептів:", error);
     }
   };
+  
   
   const handleSignOut = () => {
     signOut(auth)

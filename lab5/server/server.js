@@ -23,17 +23,21 @@ app.use(cors());
 app.use(express.json());
 
 let users = [];
-function authenticateToken(req, res, next) {
+async function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
   if (!token) return res.sendStatus(401);
 
-  jwt.verify(token, SECRET_KEY, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(token); // ✅ Firebase перевірка
+    req.user = { id: decodedToken.uid }; // зберігаємо userId
     next();
-  });
+  } catch (error) {
+    console.error("Token error:", error);
+    res.sendStatus(403);
+  }
 }
+
 
 app.post('/register', async (req, res) => {
   const { email, password, name } = req.body;
