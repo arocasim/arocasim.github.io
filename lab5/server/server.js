@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 const path = require('path');
 const admin = require('firebase-admin');
 
-// ✅ Ініціалізація Firebase через env-змінну без дублювання
 if (!admin.apps.length) {
   const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
   admin.initializeApp({
@@ -124,6 +123,12 @@ app.get('/api/recipes/:id', async (req, res) => {
 app.post('/api/recipes', async (req, res) => {
   try {
     const newRecipe = req.body;
+
+    // Перевірка, чи передано userId
+    if (!newRecipe.userId) {
+      return res.status(400).json({ message: 'userId обов\'язковий для додавання рецепта' });
+    }
+
     const docRef = await recipesCollection.add(newRecipe);
     const doc = await docRef.get();
     res.status(201).json({ id: docRef.id, ...doc.data() });
@@ -132,6 +137,7 @@ app.post('/api/recipes', async (req, res) => {
     res.status(500).json({ message: 'Помилка додавання рецепта' });
   }
 });
+
 
 app.put('/api/recipes/:id', async (req, res) => {
   try {
