@@ -63,22 +63,7 @@ app.get('/profile', authenticateToken, (req, res) => {
   res.json({ id: user.id, email: user.email, name: user.name });
 });
 
-app.get('/api/recipes', async (req, res) => {
-  try {
-    const { userId } = req.query;
-    const snapshot = await recipesCollection.get();
-    let recipes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-    if (userId) {
-      recipes = recipes.filter(recipe => recipe.userId === userId);
-    }
-
-    res.json(recipes);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Помилка отримання рецептів' });
-  }
-});
 
 app.get('/api/recipes/sorted', async (req, res) => {
   try {

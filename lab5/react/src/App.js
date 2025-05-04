@@ -50,11 +50,11 @@ function Home() {
     if (!uid) return;
   
     try {
-      const token = await currentUser.getIdToken();
+      const token = await currentUser.getIdToken(); 
   
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/recipes`, {
         headers: {
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
       });
   
