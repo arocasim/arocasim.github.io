@@ -156,7 +156,8 @@ app.delete('/api/recipes/:id', async (req, res) => {
   }
 });
 
-const buildPath = path.resolve(__dirname, '../new-react-app/build');
+const buildPath = path.resolve(__dirname, '../react/build');
+
 
 app.use(express.static(buildPath));
 
