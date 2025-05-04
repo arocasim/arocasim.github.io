@@ -50,7 +50,7 @@ function Home() {
     if (!uid) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/recipes/sorted?userId=${uid}`);
+      const response = await fetch(`/api/recipes/sorted?userId=${uid}`);
       const fetchedRecipes = await response.json();
       setRecipes(fetchedRecipes);
     } catch (error) {
@@ -100,7 +100,7 @@ function Home() {
         };
 
         try {
-          const response = await fetch(`http://localhost:5000/api/recipes`, {
+          const response = await fetch(`/api/recipes`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newRecipe),
@@ -128,7 +128,7 @@ function Home() {
 
     if (result.isConfirmed) {
       try {
-        const response = await fetch(`http://localhost:5000/api/recipes/${id}`, { method: 'DELETE' });
+        const response = await fetch(`/api/recipes/${id}`, { method: 'DELETE' });
         if (!response.ok) throw new Error();
         await fetchSortedRecipes(currentUser.uid); // ⬅️ після видалення перезапитуємо список СОРТОВАНИЙ
         Swal.fire('Рецепт видалено', '', 'success');
@@ -169,7 +169,7 @@ function Home() {
         };
 
         try {
-          const response = await fetch(`http://localhost:5000/api/recipes/${recipe.id}`, {
+          const response = await fetch(`/api/recipes/${recipe.id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(updatedRecipe),
