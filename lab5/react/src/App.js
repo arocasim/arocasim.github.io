@@ -48,17 +48,23 @@ function Home() {
 
   const fetchSortedRecipes = async (uid) => {
     if (!uid) return;
-
+  
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/recipes`)
-
+      const token = await currentUser.getIdToken();
+  
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/recipes`, {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
+      });
+  
       const fetchedRecipes = await response.json();
       setRecipes(fetchedRecipes);
     } catch (error) {
-      console.error("Помилка завантаження відсортованих рецептів:", error);
+      console.error("Помилка завантаження рецептів:", error);
     }
   };
-
+  
   const handleSignOut = () => {
     signOut(auth)
       .then(() => setCurrentUser(null))
