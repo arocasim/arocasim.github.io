@@ -16,7 +16,7 @@ const Recipe = () => {
       }
 
       try {
-        const response = await fetch `http://localhost:5000/api/recipes/${recipe.id}`;
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/recipes/${recipe.id}`);
         if (!response.ok) throw new Error("Не вдалося отримати рецепт");
 
         const data = await response.json();
